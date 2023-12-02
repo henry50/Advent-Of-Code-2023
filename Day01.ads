@@ -1,7 +1,8 @@
 with Ada.Strings.Unbounded; use Ada.Strings.Unbounded;
+with Advent_IO; use Advent_IO;
 package Day01 is
 
-function Part1(Input: Unbounded_String) return Unbounded_String;
-function Part2(Input: Unbounded_String) return Unbounded_String;
+function Part1(Input: Puzzle_Input) return Integer;
+function Part2(Input: Puzzle_Input) return Integer;
 
 end Day01;
