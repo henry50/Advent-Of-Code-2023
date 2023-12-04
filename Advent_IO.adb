@@ -5,22 +5,9 @@ with Ada.Directories; use Ada.Directories;
 
 package body Advent_IO is
 
-function Pad_Day(D: Day; Example: Boolean) return String is
-    Day_Image: String := D'Image;
-    File_Prefix: Unbounded_String := To_Unbounded_String("day");
-begin
-    if Example then
-        File_Prefix := To_Unbounded_String("ex");
-    end if;
-    if D < 10 then
-        return To_String(File_Prefix) & "0" & Day_Image(2);
-    else
-        return To_String(File_Prefix) & Day_Image(2..3);
-    end if;
-end Pad_Day;
 
-function Get_Input(D: Day; Example: Boolean) return Puzzle_Input is
-    Filename: String := "./input/" & Pad_Day(D, Example) & ".txt";
+
+function Get_Input(Filename: String) return Puzzle_Input is
     File: File_Type;
     Line: Unbounded_String;
     Output: Puzzle_Input;

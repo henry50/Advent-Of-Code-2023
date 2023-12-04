@@ -7,5 +7,5 @@ package Advent_IO is
        Element_Type => Unbounded_String);
     File_Not_Found_Error: exception;
     type Puzzle_Input is new Unbounded_String_Vector.Vector with null record;
-    function Get_Input(D: Day; Example: Boolean) return Puzzle_Input;
+    function Get_Input(Filename: String) return Puzzle_Input;
 end Advent_IO;

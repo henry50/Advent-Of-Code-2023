@@ -2,6 +2,7 @@ with Ada.Text_IO; use Ada.Text_IO;
 with Ada.Integer_Text_IO; use Ada.Integer_Text_IO;
 with Ada.Strings.Unbounded; use Ada.Strings.Unbounded;
 with Ada.Exceptions; use Ada.Exceptions;
+with Ada.Command_Line;
 
 with Advent_IO; use Advent_IO;
 
@@ -12,13 +13,30 @@ with Day16; with Day17; with Day18; with Day19; with Day20;
 with Day21; with Day22; with Day23; with Day24; with Day25;
 
 procedure AoC is
-    -- Get this from cmd line args
-    Day_To_Run: Day := 4;
-    -- and this
-    Is_Example: Boolean := False;
+    Day_To_Run: Day;
+    Input_File: Unbounded_String;
     Input: Puzzle_Input;
+    package ACL renames Ada.Command_Line;
+    function Pad_Day(D: Day) return String is
+        Day_Image: String := D'Image;
+    begin
+        if D < 10 then
+            return "0" & Day_Image(2);
+        else
+            return Day_Image(2..3);
+        end if;
+    end Pad_Day;
 begin
-    Input := Get_Input(Day_To_Run, Is_Example);
+    if ACL.Argument_Count /= 1 and ACL.Argument_Count /= 2 then
+        raise Program_Error with "Usage: " & ACL.Command_Name & " day [input_file]";
+    end if;
+    Day_To_Run := Day'Value(ACL.Argument(1));
+    Input_File := To_Unbounded_String(case ACL.Argument_Count is
+        when 1 => "./input/day" & Pad_Day(Day_To_Run) & ".txt",
+        when 2 => "./input/" & ACL.Argument(2),
+        when others => "" -- unreachable
+    );
+    Input := Get_Input(To_String(Input_File));
     case Day_To_Run is
         when 1 => 
             Put_Line("Part 1:");
@@ -148,5 +166,9 @@ begin
     end case;
 exception
     when E: File_Not_Found_Error =>
-        Put_Line("Unable to open input file: " & Exception_Message(E));
+        Put_Line(Exception_Message(E) & " (Files must be in the input directory)");
+        Ada.Command_Line.Set_Exit_Status(1);
+    when E: Program_Error =>
+        Put_Line(Exception_Message(E));
+        Ada.Command_Line.Set_Exit_Status(1);
 end AoC;
