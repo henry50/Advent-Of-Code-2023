@@ -13,7 +13,7 @@ with Day21; with Day22; with Day23; with Day24; with Day25;
 
 procedure AoC is
     -- Get this from cmd line args
-    Day_To_Run: Day := 1;
+    Day_To_Run: Day := 2;
     -- and this
     Is_Example: Boolean := False;
     Input: Puzzle_Input;
