@@ -1,6 +1,11 @@
 # Advent-Of-Code-2023
 Advent of Code 2023 in Ada
 
+## Usage
+Build with `gnatmake -D build aoc.adb` and run `./aoc day [input_file]`.
+
+For example `./aoc 12` will run day 12 with `day12.txt` from the input directory and `./aoc 5 ex05.txt` will run day 5 with `ex05.txt` from the `input` directory.
+
 ## Completion Calendar ⭐
 | Mon | Tue | Wed | Thu | Fri | Sat | Sun |
 |:---:|:---:|:---:|:---:|:---:|:---:|:---:|
