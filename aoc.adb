@@ -16,6 +16,8 @@ procedure AoC is
     Day_To_Run: Day;
     Input_File: Unbounded_String;
     Input: Puzzle_Input;
+    type Input_Method_Enum is (Auto, Manual);
+    Input_Method: Input_Method_Enum;
     package ACL renames Ada.Command_Line;
     function Pad_Day(D: Day) return String is
         Day_Image: String := D'Image;
@@ -27,14 +29,15 @@ procedure AoC is
         end if;
     end Pad_Day;
 begin
-    if ACL.Argument_Count /= 1 and ACL.Argument_Count /= 2 then
-        raise Program_Error with "Usage: " & ACL.Command_Name & " day [input_file]";
-    end if;
+    Input_Method := (case ACL.Argument_Count is
+        when 1 => Auto,
+        when 2 => Manual,
+        when others => raise Program_Error with "Usage: " & ACL.Command_Name & " day [input_file]"
+    );
     Day_To_Run := Day'Value(ACL.Argument(1));
-    Input_File := To_Unbounded_String(case ACL.Argument_Count is
-        when 1 => "./input/day" & Pad_Day(Day_To_Run) & ".txt",
-        when 2 => "./input/" & ACL.Argument(2),
-        when others => "" -- unreachable
+    Input_File := To_Unbounded_String(case Input_Method is
+        when Auto => "./input/day" & Pad_Day(Day_To_Run) & ".txt",
+        when Manual => "./input/" & ACL.Argument(2)
     );
     Input := Get_Input(To_String(Input_File));
     case Day_To_Run is
