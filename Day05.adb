@@ -1,9 +1,6 @@
 with Ada.Strings.Unbounded; use Ada.Strings.Unbounded;
 with Ada.Containers.Vectors;
-with Ada.Containers.Indefinite_Hashed_Maps;
 with Advent_IO; use Advent_IO;
-
-with Ada.Text_IO; use Ada.Text_IO;
 
 package body Day05 is
 
@@ -89,28 +86,27 @@ begin
     return Parsed;
 end Parse_Input;
 
-function Seed_Location(Seed: Long_Long_Integer; Almanac: Almanac_Full.Vector) return Long_Long_Integer is
-    Current_Val: Long_Long_Integer := Seed;
-begin
-    for Map of Almanac loop
-        for Line of Map loop
-            if  Current_Val >= Line.Source_Start
-            and Current_Val < Line.Source_Start + Line.Length then
-                Current_Val := Line.Dest_Start + (Current_Val - Line.Source_Start);
-                exit;
-            end if;
-        end loop;
-    end loop;
-    return Current_Val;
-end;
-
 function Part1(Input: Puzzle_Input) return Integer is
     Parsed: Parsed_Input := Parse_Input(Input);
     Min_Location: Long_Long_Integer := -1;
     Current_Loc: Long_Long_Integer;
+    function Seed_Location(Seed: Long_Long_Integer) return Long_Long_Integer is
+        Current_Val: Long_Long_Integer := Seed;
+    begin
+        for Map of Parsed.Almanac loop
+            for Line of Map loop
+                if  Current_Val >= Line.Source_Start
+                and Current_Val < Line.Source_Start + Line.Length then
+                    Current_Val := Line.Dest_Start + (Current_Val - Line.Source_Start);
+                    exit;
+                end if;
+            end loop;
+        end loop;
+        return Current_Val;
+    end Seed_Location;
 begin
     for Seed of Parsed.Seeds loop
-        Current_Loc := Seed_Location(Seed, Parsed.Almanac);
+        Current_Loc := Seed_Location(Seed);
         if Current_Loc < Min_Location or Min_Location = -1 then
             Min_Location := Current_Loc;
         end if;
@@ -121,41 +117,110 @@ end Part1;
 function Part2(Input: Puzzle_Input) return Integer is
     Parsed: Parsed_Input := Parse_Input(Input);
     Min_Location: Long_Long_Integer := -1;
-    Current_Loc: Long_Long_Integer;
     Start: Long_Long_Integer;
     Len: Long_Long_Integer;
+    type Range_Rec is record
+        Start:  Long_Long_Integer;
+        Stop:   Long_Long_Integer;
+        Length: Long_Long_Integer;
+    end record;
+    -- vector of ranges
+    package Range_Vec is new Ada.Containers.Vectors
+        (Index_Type   => Natural,
+        Element_Type => Range_Rec);
+    Unmodified_Ranges: Range_Vec.Vector;
+    Modified_Ranges: Range_Vec.Vector;
+    Temp_Unmodified_Ranges: Range_Vec.Vector;
     I: Natural := 0;
-    function Binary_Min(A, B: Long_Long_Integer) return Long_Long_Integer is
-        P, Q, R, S, Y, Z: Long_Long_Integer;
+    type Intersect_Result is record
+        Intersect: Range_Vec.Vector;
+        Outersect: Range_Vec.Vector;
+    end record;
+    Result: Intersect_Result;
+    -- intersect the seed range with a source/dest mapping, returning the
+    -- intersection and the "outersection" (not the intersection)
+    function Intersect(Seed, Source, Dest: Range_Rec) return Intersect_Result is
+        Result: Intersect_Result;
+        Result_Start: Long_Long_Integer := Long_Long_Integer'Max(Seed.Start, Source.Start);
+        Result_End: Long_Long_Integer := Long_Long_Integer'Min(Seed.Stop, Source.Stop);
+        Result_Len: Long_Long_Integer := Result_End - Result_Start + 1;
+        Pre_Len: Long_Long_Integer := Result_Start - Seed.Start;
+        Post_Len: Long_Long_Integer := Seed.Stop - Result_End;
+        Dest_Diff: Long_Long_Integer := Dest.Start - Source.Start;
+        Rng: Range_Rec;
     begin
-        P := Seed_Location(A, Parsed.Almanac);
-        Q := Seed_Location(B, Parsed.Almanac);
-        --  Put("A: "); Put(A'Image); Put(" B: "); Put_Line(B'Image);
-        --  Put("P: "); Put(P'Image); Put(" Q: "); Put_Line(Q'Image);
-        --  New_Line;
-        if P /= Q then
-            Y := A+(B-A)/2;
-            Z := A+(B-A)/2+1;
-            --  Put_Line("-- R(" & A'Image & ", " & Y'Image & ") --");
-            R := Binary_Min(A, Y);
-            --  Put_Line("-- S(" & Z'Image & ", " & B'Image & ") --");
-            S := Binary_Min(Z, B);
-            return Long_Long_Integer'Min(R, S);
-        else
-            return P;
+        if Result_Len <= 0 then
+            -- no intersection, return self
+            Result.Outersect.Append(Seed);
+            return Result;
         end if;
-    end Binary_Min;
+        if Pre_Len > 0 then
+            Rng := (Start  => Seed.Start,
+                    Stop   => Result_Start-1,
+                    Length => Pre_Len);
+            Result.Outersect.Append(Rng);
+        end if;
+        Rng := (Start  => Dest_Diff + Result_Start,
+                Stop   => Dest_Diff + Result_End, 
+                Length => Result_Len);
+        Result.Intersect.Append(Rng);
+        if Post_Len > 0 then
+            Rng := (Start  => Result_End+1,
+                    Stop   => Seed.Stop,
+                    Length => Post_Len);
+            Result.Outersect.Append(Rng);
+        end if;
+        return Result;
+    end Intersect;
+    -- convert start and length to range record
+    function Rangeify(Start, Len: Long_Long_Integer) return Range_Rec is
+        Result: Range_Rec;
+    begin
+        Result.Start := Start;
+        Result.Stop := Start + Len - 1;
+        Result.Length := Len;
+        return Result;
+    end Rangeify;
 begin
+    -- generate initial ranges
     while I < Parsed.Seeds.Last_Index loop
         Start := Parsed.Seeds.Element(I);
         Len := Parsed.Seeds.Element(I+1);
-        for J in Start..Start+Len-1 loop
-            Current_Loc := Seed_Location(J, Parsed.Almanac);
-            if Current_Loc < Min_Location or Min_Location = -1 then
-                Min_Location := Current_Loc;
-            end if;
-        end loop;
+        Unmodified_Ranges.Append(Rangeify(Start, Len));
         I := I + 2;
+    end loop;
+    -- for each map
+    for Map of Parsed.Almanac loop
+        -- for each line
+        for Line of Map loop
+            -- for each un-transformed range
+            for Rng of Unmodified_Ranges loop
+                -- find the intersection of the range with the current mapping
+                Result := Intersect(
+                    Rng,
+                    Rangeify(Line.Source_Start, Line.Length),
+                    Rangeify(Line.Dest_Start, Line.Length)
+                );
+                -- these are the values that could still be transformed
+                -- by later lines in this map
+                Temp_Unmodified_Ranges.Append_Vector(Result.Outersect);
+                -- these are the values that have been modified and cannot
+                -- change until the next map
+                Modified_Ranges.Append_Vector(Result.Intersect);
+            end loop;
+            -- copy and clear unmodified ranges
+            Unmodified_Ranges := Temp_Unmodified_Ranges;
+            Temp_Unmodified_Ranges.Clear;
+        end loop;
+        -- combine modified and unmodified for next map
+        Unmodified_Ranges.Append_Vector(Modified_Ranges);
+        Modified_Ranges.Clear;
+    end loop;
+    -- find the lowest lower bound in the location ranges
+    for Rng of Unmodified_Ranges loop
+        if Rng.Start < Min_Location or Min_Location = -1 then
+            Min_Location := Rng.Start;
+        end if;
     end loop;
     return Integer(Min_Location);
 end Part2;
