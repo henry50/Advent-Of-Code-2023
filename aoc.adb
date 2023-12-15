@@ -80,7 +80,7 @@ begin
             Put_Line("Part 1:");
             Put(Day08.Part1(Input)); New_Line;
             Put_Line("Part 2:");
-            Put(Day08.Part2(Input)); New_Line;
+            Put(Day08.Part2(Input)'Image); New_Line;
         when 9 => 
             Put_Line("Part 1:");
             Put(Day09.Part1(Input)); New_Line;
