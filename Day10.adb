@@ -36,7 +36,7 @@ function Solve(Input: Puzzle_Input; Part: Part_Enum) return Integer is
     Path: Coord_Set.Set;
     Current_Pos: Coord;
     R: Row_Idx; C: Col_Idx;
-    Facing: Direction;
+    Start_Facing, End_Facing, Facing: Direction;
     Intersections: Natural;
     Result: Natural := 0;
     function Now_Facing(D: Direction; P: Pipe_Type) return Direction is
@@ -116,6 +116,7 @@ begin
     while not Is_Valid(Facing, R, C) loop
         Facing := Direction'Succ(Facing);
     end loop;
+    Start_Facing := Facing;
     loop
         -- update coordinates
         case Facing is
@@ -134,19 +135,48 @@ begin
         exit when Grid(R, C) = Start;
         -- work out new direction
         Facing := Now_Facing(Facing, Grid(R, C));
+        End_Facing := Facing;
     end loop;
     -- end of part 1
     if Part = Part_1 then
         -- half the path length to get the answer
         return Result / 2;
     end if;
+    -- replace S with the correct pipe
+    Grid(R, C) := (case Start_Facing is
+        when North => (case End_Facing is
+            when North => NS,
+            when South => NS,
+            when East  => NE,
+            when West  => NW
+        ),
+        when South => (case End_Facing is
+            when North => NS,
+            when South => NS,
+            when East  => SE,
+            when West  => SW
+        ),
+        when East  => (case End_Facing is
+            when North => SE,
+            when South => NE,
+            when East  => EW,
+            when West  => EW
+        ),
+        when West  => (case End_Facing is
+            when North => SW,
+            when South => NW,
+            when East  => EW,
+            when West  => EW
+        )
+    );
     -- use ray casting to determine how many points are inside the path
     for I in Row_Idx loop
         Intersections := 0;
         for J in Col_Idx loop
             Current_Pos := (Row => I, Col => J);
             if Path.Contains(Current_Pos) then
-                -- I'm not really sure why ignoring NE and NW works but it does
+                -- Ignores half of the 90 degree pipes and all horizontal pipes
+                -- so intersections are counted correctly
                 if Grid(I, J) /= EW and Grid(I, J) /= NE and Grid(I, J) /= NW then
                     Intersections := Intersections + 1;
                 end if;
