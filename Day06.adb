@@ -77,7 +77,7 @@ begin
     return Result;
 end Solve_Race_Big;
 
-function Part1(Input: Puzzle_Input) return Integer is
+function Part1(Input: Puzzle_Input) return String is
     Time_Str: Unbounded_String := Input.Element(0);
     Distance_Str: Unbounded_String := Input.Element(1);
     Times: Natural_Vec.Vector;
@@ -103,10 +103,10 @@ begin
     for I in Times.First_Index..Times.Last_Index loop
         Result := Result * Solve_Race_Small(Times.Element(I), Distances.Element(I));
     end loop;
-    return Result;
+    return Result'Image;
 end Part1;
 
-function Part2(Input: Puzzle_Input) return Integer is
+function Part2(Input: Puzzle_Input) return String is
     Time_Str: Unbounded_String := Input.Element(0);
     Distance_Str: Unbounded_String := Input.Element(1);
     Parsed_Time: Unbounded_String;
@@ -130,7 +130,7 @@ begin
     end loop;
     Time := From_String(To_String(Parsed_Time));
     Distance := From_String(To_String(Parsed_Distance));
-    return Solve_Race_Big(Time, Distance);
+    return Solve_Race_Big(Time, Distance)'Image;
 end Part2;
 
 end Day06;

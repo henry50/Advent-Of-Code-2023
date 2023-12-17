@@ -7,8 +7,8 @@ procedure Make_Day is
                    & "package Day";
     ADS_2: String := " is" & LF
                    & LF
-                   & "function Part1(Input: Puzzle_Input) return Integer;" & LF
-                   & "function Part2(Input: Puzzle_Input) return Integer;" & LF
+                   & "function Part1(Input: Puzzle_Input) return String;" & LF
+                   & "function Part2(Input: Puzzle_Input) return String;" & LF
                    & LF
                    & "end Day";
     ADS_3: String := ";";
@@ -18,13 +18,13 @@ procedure Make_Day is
                    & "package body Day";
     ADB_2: String := " is" & LF
                      & LF
-                     & "function Part1(Input: Puzzle_Input) return Integer is" & LF
+                     & "function Part1(Input: Puzzle_Input) return String is" & LF
                      & "    " & LF
                      & "begin" & LF
                      & "    return 0;" & LF
                      & "end Part1;" & LF
                      & LF
-                     & "function Part2(Input: Puzzle_Input) return Integer is" & LF
+                     & "function Part2(Input: Puzzle_Input) return String is" & LF
                      & "    " & LF
                      & "begin" & LF
                      & "    return 0;" & LF

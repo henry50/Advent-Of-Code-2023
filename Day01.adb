@@ -3,7 +3,7 @@ with Advent_IO; use Advent_IO;
 
 package body Day01 is
 
-function Part1(Input: Puzzle_Input) return Integer is
+function Part1(Input: Puzzle_Input) return String is
     Total: Integer := 0;
     Elem: Character;
     Elem_Int: Integer;
@@ -32,10 +32,10 @@ begin
         Total := Total + First + Last;
         First := -1;
     end loop;
-    return Total;
+    return Total'Image;
 end Part1;
 
-function Part2(Input: Puzzle_Input) return Integer is
+function Part2(Input: Puzzle_Input) return String is
     Total: Integer := 0;
     First: Integer := -1;
     Last: Integer;
@@ -136,7 +136,7 @@ begin
         Last := First_Match(Line, Right);
         Total := Total + First + Last;
     end loop;
-    return Total;
+    return Total'Image;
 end Part2;
 
 end Day01;

@@ -134,14 +134,14 @@ begin
     return Total;
 end Common;
 
-function Part1(Input: Puzzle_Input) return Integer is
+function Part1(Input: Puzzle_Input) return String is
 begin
-    return Common(Input, 1);
+    return Common(Input, 1)'Image;
 end Part1;
 
-function Part2(Input: Puzzle_Input) return Integer is
+function Part2(Input: Puzzle_Input) return String is
 begin
-    return Common(Input, 2);
+    return Common(Input, 2)'Image;
 end Part2;
 
 end Day03;

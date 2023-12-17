@@ -1,5 +1,4 @@
 with Ada.Text_IO; use Ada.Text_IO;
-with Ada.Integer_Text_IO; use Ada.Integer_Text_IO;
 with Ada.Strings.Unbounded; use Ada.Strings.Unbounded;
 with Ada.Exceptions; use Ada.Exceptions;
 with Ada.Command_Line;
@@ -43,129 +42,129 @@ begin
     case Day_To_Run is
         when 1 => 
             Put_Line("Part 1:");
-            Put(Day01.Part1(Input)); New_Line;
+            Put_Line(Day01.Part1(Input));
             Put_Line("Part 2:");
-            Put(Day01.Part2(Input)); New_Line;
+            Put_Line(Day01.Part2(Input));
         when 2 => 
             Put_Line("Part 1:");
-            Put(Day02.Part1(Input)); New_Line;
+            Put_Line(Day02.Part1(Input));
             Put_Line("Part 2:");
-            Put(Day02.Part2(Input)); New_Line;
+            Put_Line(Day02.Part2(Input));
         when 3 => 
             Put_Line("Part 1:");
-            Put(Day03.Part1(Input)); New_Line;
+            Put_Line(Day03.Part1(Input));
             Put_Line("Part 2:");
-            Put(Day03.Part2(Input)); New_Line;
+            Put_Line(Day03.Part2(Input));
         when 4 => 
             Put_Line("Part 1:");
-            Put(Day04.Part1(Input)); New_Line;
+            Put_Line(Day04.Part1(Input));
             Put_Line("Part 2:");
-            Put(Day04.Part2(Input)); New_Line;
+            Put_Line(Day04.Part2(Input));
         when 5 => 
             Put_Line("Part 1:");
-            Put(Day05.Part1(Input)); New_Line;
+            Put_Line(Day05.Part1(Input));
             Put_Line("Part 2:");
-            Put(Day05.Part2(Input)); New_Line;
+            Put_Line(Day05.Part2(Input));
         when 6 => 
             Put_Line("Part 1:");
-            Put(Day06.Part1(Input)); New_Line;
+            Put_Line(Day06.Part1(Input));
             Put_Line("Part 2:");
-            Put(Day06.Part2(Input)); New_Line;
+            Put_Line(Day06.Part2(Input));
         when 7 => 
             Put_Line("Part 1:");
-            Put(Day07.Part1(Input)); New_Line;
+            Put_Line(Day07.Part1(Input));
             Put_Line("Part 2:");
-            Put(Day07.Part2(Input)); New_Line;
+            Put_Line(Day07.Part2(Input));
         when 8 => 
             Put_Line("Part 1:");
-            Put(Day08.Part1(Input)); New_Line;
+            Put_Line(Day08.Part1(Input));
             Put_Line("Part 2:");
-            Put(Day08.Part2(Input)'Image); New_Line;
+            Put_Line(Day08.Part2(Input));
         when 9 => 
             Put_Line("Part 1:");
-            Put(Day09.Part1(Input)); New_Line;
+            Put_Line(Day09.Part1(Input));
             Put_Line("Part 2:");
-            Put(Day09.Part2(Input)); New_Line;
+            Put_Line(Day09.Part2(Input));
         when 10 => 
             Put_Line("Part 1:");
-            Put(Day10.Part1(Input)); New_Line;
+            Put_Line(Day10.Part1(Input));
             Put_Line("Part 2:");
-            Put(Day10.Part2(Input)); New_Line;
+            Put_Line(Day10.Part2(Input));
         when 11 => 
             Put_Line("Part 1:");
-            Put(Day11.Part1(Input)); New_Line;
+            Put_Line(Day11.Part1(Input));
             Put_Line("Part 2:");
-            Put(Day11.Part2(Input)); New_Line;
+            Put_Line(Day11.Part2(Input));
         when 12 => 
             Put_Line("Part 1:");
-            Put(Day12.Part1(Input)); New_Line;
+            Put_Line(Day12.Part1(Input));
             Put_Line("Part 2:");
-            Put(Day12.Part2(Input)); New_Line;
+            Put_Line(Day12.Part2(Input));
         when 13 => 
             Put_Line("Part 1:");
-            Put(Day13.Part1(Input)); New_Line;
+            Put_Line(Day13.Part1(Input));
             Put_Line("Part 2:");
-            Put(Day13.Part2(Input)); New_Line;
+            Put_Line(Day13.Part2(Input));
         when 14 => 
             Put_Line("Part 1:");
-            Put(Day14.Part1(Input)); New_Line;
+            Put_Line(Day14.Part1(Input));
             Put_Line("Part 2:");
-            Put(Day14.Part2(Input)); New_Line;
+            Put_Line(Day14.Part2(Input));
         when 15 => 
             Put_Line("Part 1:");
-            Put(Day15.Part1(Input)); New_Line;
+            Put_Line(Day15.Part1(Input));
             Put_Line("Part 2:");
-            Put(Day15.Part2(Input)); New_Line;
+            Put_Line(Day15.Part2(Input));
         when 16 => 
             Put_Line("Part 1:");
-            Put(Day16.Part1(Input)); New_Line;
+            Put_Line(Day16.Part1(Input));
             Put_Line("Part 2:");
-            Put(Day16.Part2(Input)); New_Line;
+            Put_Line(Day16.Part2(Input));
         when 17 => 
             Put_Line("Part 1:");
-            Put(Day17.Part1(Input)); New_Line;
+            Put_Line(Day17.Part1(Input));
             Put_Line("Part 2:");
-            Put(Day17.Part2(Input)); New_Line;
+            Put_Line(Day17.Part2(Input));
         when 18 => 
             Put_Line("Part 1:");
-            Put(Day18.Part1(Input)); New_Line;
+            Put_Line(Day18.Part1(Input));
             Put_Line("Part 2:");
-            Put(Day18.Part2(Input)); New_Line;
+            Put_Line(Day18.Part2(Input));
         when 19 => 
             Put_Line("Part 1:");
-            Put(Day19.Part1(Input)); New_Line;
+            Put_Line(Day19.Part1(Input));
             Put_Line("Part 2:");
-            Put(Day19.Part2(Input)); New_Line;
+            Put_Line(Day19.Part2(Input));
         when 20 => 
             Put_Line("Part 1:");
-            Put(Day20.Part1(Input)); New_Line;
+            Put_Line(Day20.Part1(Input));
             Put_Line("Part 2:");
-            Put(Day20.Part2(Input)); New_Line;
+            Put_Line(Day20.Part2(Input));
         when 21 => 
             Put_Line("Part 1:");
-            Put(Day21.Part1(Input)); New_Line;
+            Put_Line(Day21.Part1(Input));
             Put_Line("Part 2:");
-            Put(Day21.Part2(Input)); New_Line;
+            Put_Line(Day21.Part2(Input));
         when 22 => 
             Put_Line("Part 1:");
-            Put(Day22.Part1(Input)); New_Line;
+            Put_Line(Day22.Part1(Input));
             Put_Line("Part 2:");
-            Put(Day22.Part2(Input)); New_Line;
+            Put_Line(Day22.Part2(Input));
         when 23 => 
             Put_Line("Part 1:");
-            Put(Day23.Part1(Input)); New_Line;
+            Put_Line(Day23.Part1(Input));
             Put_Line("Part 2:");
-            Put(Day23.Part2(Input)); New_Line;
+            Put_Line(Day23.Part2(Input));
         when 24 => 
             Put_Line("Part 1:");
-            Put(Day24.Part1(Input)); New_Line;
+            Put_Line(Day24.Part1(Input));
             Put_Line("Part 2:");
-            Put(Day24.Part2(Input)); New_Line;
+            Put_Line(Day24.Part2(Input));
         when 25 => 
             Put_Line("Part 1:");
-            Put(Day25.Part1(Input)); New_Line;
+            Put_Line(Day25.Part1(Input));
             Put_Line("Part 2:");
-            Put(Day25.Part2(Input)); New_Line;
+            Put_Line(Day25.Part2(Input));
     end case;
 exception
     when E: File_Not_Found_Error =>

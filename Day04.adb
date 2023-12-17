@@ -53,7 +53,7 @@ begin
     return Result;
 end;
 
-function Part1(Input: Puzzle_Input) return Integer is
+function Part1(Input: Puzzle_Input) return String is
     Current: Card;
     Value: Natural;
     Total: Natural := 0;
@@ -63,10 +63,10 @@ begin
         Value := 2 ** (Natural(Current.Winning.Intersection(Current.Have).Length) - 1);
         Total := Total + Value;
     end loop;
-    return Total;
+    return Total'Image;
 end Part1;
 
-function Part2(Input: Puzzle_Input) return Integer is
+function Part2(Input: Puzzle_Input) return String is
     Win_Map: Num_Map.Map;
     Count_Map: Num_Map.Map;
     Current: Card;
@@ -95,7 +95,7 @@ begin
     for I in Count_Map.Iterate loop
         Total := Total + Count_Map(I);
     end loop;
-    return Total;
+    return Total'Image;
 end Part2;
 
 end Day04;

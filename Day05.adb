@@ -86,7 +86,7 @@ begin
     return Parsed;
 end Parse_Input;
 
-function Part1(Input: Puzzle_Input) return Integer is
+function Part1(Input: Puzzle_Input) return String is
     Parsed: Parsed_Input := Parse_Input(Input);
     Min_Location: Long_Long_Integer := -1;
     Current_Loc: Long_Long_Integer;
@@ -111,10 +111,10 @@ begin
             Min_Location := Current_Loc;
         end if;
     end loop;
-    return Integer(Min_Location);
+    return Min_Location'Image;
 end Part1;
 
-function Part2(Input: Puzzle_Input) return Integer is
+function Part2(Input: Puzzle_Input) return String is
     Parsed: Parsed_Input := Parse_Input(Input);
     Min_Location: Long_Long_Integer := -1;
     Start: Long_Long_Integer;
@@ -222,7 +222,7 @@ begin
             Min_Location := Rng.Start;
         end if;
     end loop;
-    return Integer(Min_Location);
+    return Min_Location'Image;
 end Part2;
 
 end Day05;

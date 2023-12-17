@@ -78,7 +78,7 @@ begin
     return Result;
 end Parse_Game;
 
-function Part1(Input: Puzzle_Input) return Integer is
+function Part1(Input: Puzzle_Input) return String is
     Current_Game: Game;
     Current_Game_Invalid: Boolean;
     Total: Natural := 0;
@@ -98,10 +98,10 @@ begin
             Total := Total + Current_Game.Num;
         end if;
     end loop;
-    return Total;
+    return Total'Image;
 end Part1;
 
-function Part2(Input: Puzzle_Input) return Integer is
+function Part2(Input: Puzzle_Input) return String is
     Current_Game: Game;
     Max_Red: Natural;
     Max_Green: Natural;
@@ -124,7 +124,7 @@ begin
         end loop;
         Total := Total + (Max_Red * Max_Green * Max_Blue);
     end loop;
-    return Total;
+    return Total'Image;
 end Part2;
 
 end Day02;

@@ -140,14 +140,14 @@ begin
     return Integer(Total);
 end Solve;
 
-function Part1(Input: Puzzle_Input) return Integer is
+function Part1(Input: Puzzle_Input) return String is
 begin
-    return Solve(Input, Part_1);
+    return Solve(Input, Part_1)'Image;
 end Part1;
 
-function Part2(Input: Puzzle_Input) return Integer is
+function Part2(Input: Puzzle_Input) return String is
 begin
-    return Solve(Input, Part_2);
+    return Solve(Input, Part_2)'Image;
 end Part2;
 
 end Day07;

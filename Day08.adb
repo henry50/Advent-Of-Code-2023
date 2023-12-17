@@ -96,13 +96,13 @@ begin
     return Steps;
 end Solve;
 
-function Part1(Input: Puzzle_Input) return Integer is
+function Part1(Input: Puzzle_Input) return String is
     Parsed: Parsed_Input := Parse_Input(Input);
 begin
-    return Solve("AAA", Parsed, Part_1);
+    return Solve("AAA", Parsed, Part_1)'Image;
 end Part1;
 
-function Part2(Input: Puzzle_Input) return Long_Long_Integer is
+function Part2(Input: Puzzle_Input) return String is
     Parsed: Parsed_Input := Parse_Input(Input);
     Z_Steps: Natural_Vec.Vector;
     Current_Key: Key;
@@ -129,7 +129,7 @@ begin
         LI := Long_Long_Integer(I);
         Steps := LI * Steps/GCD(LI, Steps);
     end loop;
-    return Steps;
+    return Steps'Image;
 end Part2;
 
 end Day08;
